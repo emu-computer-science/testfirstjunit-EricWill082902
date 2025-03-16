@@ -58,7 +58,7 @@ public class Date
         }
     }
 
-    public void setDate(String monthString, int day, int year)
+    public Date setDate(String monthString, int day, int year)
     {
         if (dateOK(monthString, day, year))
         {
@@ -68,9 +68,10 @@ public class Date
         }
         else
         {
-            System.out.println("Fatal Error in setDate(String,int, int)");
-            System.exit(0);
+          System.out.println("Invalid");
+          
         }
+        return this;
     }
 
     public void setDate(int year)
@@ -161,7 +162,7 @@ public class Date
 
     public boolean equals(Date otherDate)
     {
-        return ( (month.equals(otherDate.month))
+        return ( (month.equalsIgnoreCase(otherDate.month))
                   && (day == otherDate.day) && (year == otherDate.year) );
     }
 
@@ -253,13 +254,32 @@ public class Date
         }
     }
     
-    Date addOneDay(){
-    	   System.out.println("Date.addOneDay() is not yet implemented.");
-    	   return this;
-    	}
-    
-    
-    
+   public Date addOneDay(){
+    	int[] daysInMonth = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+      
+        if (isLeapYear(year)) {
+            daysInMonth[2] = 29;
+        }
+        
+        day++;
+        if (day > daysInMonth[getMonth()]) {
+            day = 1; 
+            int monthNumber = getMonth() + 1; 
+            
+            if (monthNumber > 12) {
+                monthNumber = 1;
+                year++; 
+            }
+            month = monthString(monthNumber);
+        }
+
+        return this;
+    }
+   
+   private boolean isLeapYear(int year) {
+	    return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+	}
+
     public static void main(String[] args) {
         System.out.println("Main in Date.");
         Date tester = new Date();

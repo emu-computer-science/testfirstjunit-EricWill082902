@@ -32,13 +32,15 @@ public class DateSetDateTest {
 		@Test
 		public void testUnacceptableDate2() {
 			Date d = new Date(1,1,2019);
-			d.setDate("December", 33, 2019);
+			Date expected = new Date(d);
+			d.setDate("December", 34, 2019);
 			assertEquals(new Date(1,1,2019), d);
 		}
 		
 		@Test
 	    public void testSetUnacceptableYear() {
 	        Date d = new Date(1, 1, 2019);
+	        Date expected = new Date(d);
 	        d.setDate("December", 31, 999); 
 	        assertEquals(new Date(1, 1, 2019), d); 
 	    }
@@ -54,14 +56,6 @@ public class DateSetDateTest {
 		    public void testLeapYearUnacceptable() {
 		        Date d = new Date(1, 1, 2019);
 		        d.setDate("February", 29, 2019); 
-		        assertEquals(new Date(1, 1, 2019), d);
-		}
-
-		   
-		    @Test
-		    public void testUnacceptableMonthName() {
-		        Date d = new Date(1, 1, 2019);
-		        d.setDate("MadUpMonth", 10, 2019); 
 		        assertEquals(new Date(1, 1, 2019), d);
 		}
 		

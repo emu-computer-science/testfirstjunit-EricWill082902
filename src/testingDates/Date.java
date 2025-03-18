@@ -102,13 +102,26 @@ public class Date
 
     public void setDay(int day)
     {
-        if ((day <= 0) || (day > 31))
+ 
+        if ((day <= 1) || (day > 31))
         {
             System.out.println("Fatal Error in setDay(int)");
             System.exit(0);
         }
         else
             this.day = day;
+    }
+    
+    @Override
+    public Object clone() {
+    return new Date(this);
+    }
+    @Override
+    public boolean equals(Object maybeDate) {
+    if (maybeDate == null || maybeDate.getClass() != getClass()) return false;
+    Date maybeCopy = (Date) maybeDate;
+    return maybeCopy.day == day && maybeCopy.month == month && maybeCopy.year ==
+    year;
     }
 
     public int getMonth( )
@@ -162,7 +175,7 @@ public class Date
 
     public boolean equals(Date otherDate)
     {
-        return ( (month.equalsIgnoreCase(otherDate.month))
+        return ( (month.equals(otherDate.month))
                   && (day == otherDate.day) && (year == otherDate.year) );
     }
 
@@ -261,16 +274,15 @@ public class Date
             daysInMonth[2] = 29;
         }
         
-        day++;
+        this.day++;
         if (day > daysInMonth[getMonth()]) {
             day = 1; 
             int monthNumber = getMonth() + 1; 
             
-            if (monthNumber > 12) {
-                monthNumber = 1;
-                year++; 
+            this.month = monthString((getMonth() % 12) + 1); 
+            if (this.month.equals("January")) {
+                this.year++; 
             }
-            month = monthString(monthNumber);
         }
 
         return this;
